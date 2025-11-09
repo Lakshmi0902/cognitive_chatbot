@@ -1,9 +1,0 @@
-{
-  "buildCommand": "npm rebuild vite && npx vite build",
-  "installCommand": "npm install",
-  "outputDirectory": "dist",
-  "framework": "vite",
-  "env": {
-    "NODE_ENV": "production"
-  }
-}

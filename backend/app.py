@@ -6,10 +6,8 @@ from sentence_transformers import SentenceTransformer
 import numpy as np
 import google.generativeai as genai
 from dotenv import load_dotenv
-from googletrans import Translator
-
-
-translator = Translator()
+# from googletrans import Translator
+# translator = Translator()
 from deep_translator import GoogleTranslator
 
 def translate_text(text, target_lang):

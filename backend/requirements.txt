@@ -9,5 +9,4 @@ google-generativeai==0.7.2
 requests
 numpy
 python-dotenv
-googletrans==4.0.0-rc1
 deep-translator
