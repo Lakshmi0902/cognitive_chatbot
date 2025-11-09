@@ -89,7 +89,7 @@ if (humanMode) {
 
   // ✅ Translate human message based on selected language
   try {
-    const res = await axios.post("http://localhost:5000/translate", {
+    const res = await axios.post("https://cognitive-chatbot.onrender.com/translate", {
       text: reply,
       language: selectedLanguage, // use lowercase code (already mapped)
     });
@@ -101,7 +101,7 @@ if (humanMode) {
   // ✅ Translate return button
   let returnChip = "Return to AI Assistant";
   try {
-    const resChip = await axios.post("http://localhost:5000/translate", {
+    const resChip = await axios.post("https://cognitive-chatbot.onrender.com/translate", {
       text: "Return to AI Assistant",
       language: selectedLanguage,
     });
@@ -122,7 +122,7 @@ if (humanMode) {
 
   // 🤖 AI Chatbot mode (send language to backend)
   try {
-    const res = await axios.post("http://localhost:5000/chat", {
+    const res = await axios.post("https://cognitive-chatbot.onrender.com/chat", {
       message: userMessage,
       session_id: sessionId,
       language: selectedLanguage,
@@ -150,7 +150,7 @@ if (intent === "talk_to_agent" || intent === "human_handoff") {
     const translatedResponses = await Promise.all(
       textsToTranslate.map(async (text) => {
         try {
-          const res = await axios.post("http://localhost:5000/translate", {
+          const res = await axios.post("https://cognitive-chatbot.onrender.com/translate", {
             text,
             language: lang,
           });
@@ -239,7 +239,7 @@ const handleChipClick = async (chip) => {
 
     // Translate “back to AI” message for confirmation
     try {
-      const res = await axios.post("http://localhost:5000/translate", {
+      const res = await axios.post("https://cognitive-chatbot.onrender.com/translate", {
         text: "🤖 You are now back with FinSmart AI Assistant!",
         language: selectedLanguage,
       });
@@ -283,7 +283,7 @@ const handleChipClick = async (chip) => {
     try {
       const translatedResponses = await Promise.all(
         textsToTranslate.map(async (text) => {
-          const res = await axios.post("http://localhost:5000/translate", {
+          const res = await axios.post("https://cognitive-chatbot.onrender.com/translate", {
             text,
             language: selectedLanguage,
           });
@@ -313,7 +313,7 @@ const handleChipClick = async (chip) => {
   setLoading(true);
 
   try {
-    const res = await axios.post("http://localhost:5000/chat", {
+    const res = await axios.post("https://cognitive-chatbot.onrender.com/chat", {
       message: value,
       session_id: sessionId,
       language: selectedLanguage,
