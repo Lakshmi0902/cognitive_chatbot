@@ -1,0 +1,106 @@
+<!-- 
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>FinSmart Chatbot</title>
+  <style>
+    body{font-family: Arial; background:#f3f6fb; display:flex; justify-content:center; padding-top:30px;}
+    .widget{width:420px; background:white; border-radius:12px; box-shadow:0 6px 24px rgba(0,0,0,0.12); overflow:hidden;}
+    .header{background:#0047ab;color:white;padding:12px 16px}
+    .messages{height:420px;padding:12px; overflow-y:auto;}
+    .user{text-align:right;margin:6px 0}
+    .user .bubble{display:inline-block;background:#e6f0ff;padding:10px;border-radius:10px}
+    .bot{text-align:left;margin:6px 0}
+    .bot .bubble{display:inline-block;background:#f1f1f1;padding:10px;border-radius:10px}
+    .input{display:flex;padding:10px;border-top:1px solid #eee}
+    .input input{flex:1;padding:10px;border-radius:8px;border:1px solid #ddd}
+    .input button{margin-left:8px;padding:10px 14px;background:#0047ab;color:white;border:none;border-radius:8px}
+    .chips{padding:8px 12px}
+    .chip{display:inline-block;background:#eef6ff;color:#0047ab;padding:6px 10px;border-radius:20px;margin:4px;cursor:pointer}
+  </style>
+  <script type="module" crossorigin src="/assets/index-Cj-1UelD.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-vraHxOJA.css">
+</head>
+<body>
+<div class="widget">
+  <div class="header"><strong>FinSmart Assistant</strong> — Chat Support</div>
+  <div id="messages" class="messages"></div>
+  <div id="chips" class="chips"></div>
+  <div class="input">
+    <input id="inputBox" placeholder="Ask about loans, balance, insurance..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script>
+let sessionId = localStorage.getItem("fs_session") || null;
+const apiUrl = "http://127.0.0.1:5000/chat";
+
+function addMessage(who, text){
+  const m = document.getElementById("messages");
+  const div = document.createElement("div");
+  div.className = who;
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+  bubble.innerText = text;
+  div.appendChild(bubble);
+  m.appendChild(div);
+  m.scrollTop = m.scrollHeight;
+}
+
+function renderChips(chips){
+  const c = document.getElementById("chips");
+  c.innerHTML = "";
+  chips.forEach(chip=>{
+    const btn = document.createElement("span");
+    btn.className = "chip";
+    btn.innerText = chip;
+    btn.onclick = ()=> { document.getElementById("inputBox").value = chip; sendMessage() };
+    c.appendChild(btn);
+  });
+}
+
+async function sendMessage(){
+  const input = document.getElementById("inputBox");
+  const text = input.value.trim();
+  if(!text) return;
+  addMessage("user", text);
+  input.value = "";
+  renderChips([]);
+  // call backend
+  const payload = { message: text };
+  if(sessionId) payload.session_id = sessionId;
+  const res = await fetch(apiUrl, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json();
+  sessionId = data.session_id;
+  localStorage.setItem("fs_session", sessionId);
+  addMessage("bot", data.reply);
+  if(data.chips && data.chips.length) renderChips(data.chips);
+}
+
+window.onload = () => {
+  // welcome message
+  addMessage("bot", "Hi — I am FinSmart Assistant. Try: Check Balance / Loan Status / Insurance");
+  // preload chips for quick start:
+  renderChips(["Check Balance", "Loan Status", "Insurance"]);
+};
+</script>
+</body>
+</html>
+ -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>FinSmart Assistant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
