@@ -11,6 +11,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "dependencies": {
     "@vitalets/google-translate-api": "^9.2.1",
     "@vitejs/plugin-react": "^5.1.0",
