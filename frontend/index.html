@@ -15,7 +15,7 @@
 
 
  -->
-<!doctype html>
+<!-- <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -27,4 +27,27 @@
    
     <script type="module" src="/main.jsx"></script>
   </body>
+</html> -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FinSmart Assistant</title>
+    <!-- ✅ Vite React Refresh preamble -->
+    <script type="module">
+      import RefreshRuntime from "/@react-refresh";
+      RefreshRuntime.injectIntoGlobalHook(window);
+      window.$RefreshReg$ = () => {};
+      window.$RefreshSig$ = () => (type) => type;
+      window.__vite_plugin_react_preamble_installed__ = true;
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- ✅ Correct entry for Vite -->
+    <script type="module" src="/main.jsx"></script>
+  </body>
 </html>
+
