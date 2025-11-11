@@ -13,7 +13,9 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
+// ✅ Works for both localhost and Vercel
 export default defineConfig({
   plugins: [react()],
-  base: "./", // important for Vercel
+  base: "./", // makes asset paths relative (important for Vercel)
 });
+
