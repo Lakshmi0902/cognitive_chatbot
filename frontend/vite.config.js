@@ -28,15 +28,11 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/", // ✅ required for BrowserRouter + Vercel
+  base: "/", // ✅ absolute, required for Vercel to find /assets/*.js
   build: {
     outDir: "dist",
     assetsDir: "assets",
     emptyOutDir: true,
-  },
-  server: {
-    port: 5173,
-    open: true,
   },
 });
 
