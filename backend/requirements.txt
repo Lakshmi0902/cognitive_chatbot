@@ -9,3 +9,4 @@ google-auth==2.42.1
 google-auth-httplib2==0.2.1
 httplib2==0.31.0
 google-api-python-client==2.187.0
+rapidfuzz==3.9.4
