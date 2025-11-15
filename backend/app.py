@@ -5,8 +5,6 @@ from rapidfuzz import fuzz
 import numpy as np
 import google.generativeai as genai
 from dotenv import load_dotenv
-from sentence_transformers import SentenceTransformer
-
 
 from deep_translator import GoogleTranslator
 
@@ -21,6 +19,7 @@ def translate_text(text, target_lang):
         print("⚠️ Translation Error:", e)
         return text
 
+# ---------- Load Environment Variables ----------
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
@@ -38,7 +37,7 @@ DB_PATH = "chat_logs.db"
 app = Flask(__name__)
 CORS(app)
 sessions = {}
-sbert = SentenceTransformer("all-MiniLM-L6-v2")
+
 
 # ---------- Google Translate helper ----------
 def translate_text(text, target_lang):
@@ -221,33 +220,35 @@ INTENTS = [
 # ---------- INTENT MATCHING ----------
 intent_phrases = [" ||| ".join(it["phrases"]) for it in INTENTS]
 intent_map = [it for it in INTENTS]
-intent_embeddings = sbert.encode(intent_phrases)
+
 
 def match_intent(user_text):
     user_text_lower = user_text.lower().strip()
+
+    # 1. Exact match
     for it in INTENTS:
         for phrase in it["phrases"]:
             if user_text_lower == phrase.lower():
                 return it
+
+    # 2. Substring match
     for it in INTENTS:
         for phrase in it["phrases"]:
             if phrase.lower() in user_text_lower:
                 return it
+
+    # 3. RapidFuzz fuzzy match
     best, best_score = None, 0
     for it in INTENTS:
         for phrase in it["phrases"]:
             score = fuzz.token_set_ratio(user_text_lower, phrase.lower())
             if score > best_score:
                 best, best_score = it, score
+
     if best_score >= SIMILARITY_THRESHOLD:
         return best
-    u_emb = sbert.encode([user_text])[0]
-    sims = np.dot(intent_embeddings, u_emb) / (
-        np.linalg.norm(intent_embeddings, axis=1) * (np.linalg.norm(u_emb) + 1e-8)
-    )
-    idx = int(np.argmax(sims))
-    if sims[idx] > 0.55:
-        return intent_map[idx]
+
+    # 4. Fallback
     return next(it for it in INTENTS if it["name"] == "fallback")
 
 # ---------- ROUTES ----------
