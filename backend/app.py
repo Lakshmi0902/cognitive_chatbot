@@ -19,7 +19,6 @@ def translate_text(text, target_lang):
         print("⚠️ Translation Error:", e)
         return text
 
-# ---------- Load Environment Variables ----------
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
