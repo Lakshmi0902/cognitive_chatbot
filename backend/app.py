@@ -5,6 +5,8 @@ from rapidfuzz import fuzz
 import numpy as np
 import google.generativeai as genai
 from dotenv import load_dotenv
+from sentence_transformers import SentenceTransformer
+
 
 from deep_translator import GoogleTranslator
 

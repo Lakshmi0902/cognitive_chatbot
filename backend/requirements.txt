@@ -13,3 +13,5 @@ google-api-python-client==2.187.0
 deep-translator==1.11.4
 rapidfuzz==3.9.4
 numpy==1.26.4
+sentence-transformers==3.1.1
+torch==2.3.0
