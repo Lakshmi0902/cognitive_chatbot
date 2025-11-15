@@ -480,10 +480,25 @@ def translate_text_route():
 #     CORS(app, resources={r"/*": {"origins": "*"}})
 #     app.run(host="0.0.0.0", port=port, debug=False)
 
+# if __name__ == "__main__":
+#     import os
+#     port = int(os.environ.get("PORT", 5000))  # ✅ use Render-assigned port
+#     init_db()
+#     CORS(app, resources={r"/*": {"origins": ["https://cognitive-chatbot-frontend.onrender.com"]}})
+#     app.run(host="0.0.0.0", port=port, debug=False)
+
 if __name__ == "__main__":
     import os
-    port = int(os.environ.get("PORT", 5000))  # ✅ use Render-assigned port
+    port = int(os.environ.get("PORT", 5000))
     init_db()
-    CORS(app, resources={r"/*": {"origins": ["https://cognitive-chatbot.vercel.app"]}})
-    app.run(host="0.0.0.0", port=port, debug=False)
+    
+    CORS(app, resources={
+        r"/*": {
+            "origins": [
+                "http://localhost:5173",
+                "https://cognitive-chatbot-frontend.onrender.com"
+            ]
+        }
+    })
 
+    app.run(host="0.0.0.0", port=port, debug=False)
