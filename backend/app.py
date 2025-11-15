@@ -487,20 +487,47 @@ def translate_text_route():
 #     CORS(app, resources={r"/*": {"origins": ["https://cognitive-chatbot-frontend.onrender.com"]}})
 #     app.run(host="0.0.0.0", port=port, debug=False)
 
+# if __name__ == "__main__":
+#     import os
+#     port = int(os.environ.get("PORT", 5000))
+#     init_db()
+
+#     CORS(app,
+#          resources={r"/*": {"origins": [
+#              "https://cognitive-chatbot-frontend.onrender.com",
+#              "http://localhost:5173"
+#          ]}},
+#          supports_credentials=True,
+#          allow_headers=["Content-Type", "Authorization"],
+#          methods=["GET", "POST", "OPTIONS"]
+#     )
+
+#     app.run(host="0.0.0.0", port=port, debug=False)
 if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
     init_db()
 
-    CORS(app,
-         resources={r"/*": {"origins": [
-             "https://cognitive-chatbot-frontend.onrender.com",
-             "http://localhost:5173"
-         ]}},
-         supports_credentials=True,
-         allow_headers=["Content-Type", "Authorization"],
-         methods=["GET", "POST", "OPTIONS"]
+    CORS(
+        app,
+        resources={r"/*": {
+            "origins": [
+                "https://cognitive-chatbot-frontend.onrender.com",
+                "http://localhost:5173"
+            ]
+        }},
+        supports_credentials=True,
+        allow_headers=["Content-Type", "Authorization"],
+        methods=["GET", "POST", "OPTIONS"]
     )
 
+    @app.after_request
+    def add_cors_headers(response):
+        response.headers["Access-Control-Allow-Origin"] = "https://cognitive-chatbot-frontend.onrender.com"
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+        return response
+
     app.run(host="0.0.0.0", port=port, debug=False)
+
 
