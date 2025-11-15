@@ -491,14 +491,16 @@ if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
     init_db()
-    
-    CORS(app, resources={
-        r"/*": {
-            "origins": [
-                "http://localhost:5173",
-                "https://cognitive-chatbot-frontend.onrender.com"
-            ]
-        }
-    })
+
+    CORS(app,
+         resources={r"/*": {"origins": [
+             "https://cognitive-chatbot-frontend.onrender.com",
+             "http://localhost:5173"
+         ]}},
+         supports_credentials=True,
+         allow_headers=["Content-Type", "Authorization"],
+         methods=["GET", "POST", "OPTIONS"]
+    )
 
     app.run(host="0.0.0.0", port=port, debug=False)
+
